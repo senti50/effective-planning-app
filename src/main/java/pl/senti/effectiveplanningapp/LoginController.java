@@ -10,13 +10,13 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,10 +28,18 @@ public class LoginController {
     Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
     private final ClientRegistrationRepository clientRegistrationRepository;
     private final OAuth2AuthorizedClientService authorizedClientService;
+    private final UserRepository userRepository;
 
-    public LoginController(ClientRegistrationRepository clientRegistrationRepository, OAuth2AuthorizedClientService authorizedClientService) {
+    public LoginController(ClientRegistrationRepository clientRegistrationRepository, OAuth2AuthorizedClientService authorizedClientService, UserRepository userRepository) {
         this.clientRegistrationRepository = clientRegistrationRepository;
         this.authorizedClientService = authorizedClientService;
+        this.userRepository = userRepository;
+    }
+    @GetMapping("/save")
+    @ResponseBody
+    public User save(){
+        User user = userRepository.save(new User(23432423L, "blazej", "fdfdf@.com","dsfsdfsdf"));
+        return user;
     }
     @GetMapping("/")
     public String home(){
@@ -40,6 +48,9 @@ public class LoginController {
     @GetMapping("/loginSuccess")
     public String successfulLogin(Model model, OAuth2AuthenticationToken authentication) {
         OAuth2AuthorizedClient client = authorizedClientService.loadAuthorizedClient(authentication.getAuthorizedClientRegistrationId(), authentication.getName());
+
+
+
 
         String userInfoEndpointUri = client.getClientRegistration()
                 .getProviderDetails()
@@ -59,11 +70,6 @@ public class LoginController {
             model.addAttribute("name", userAttributes.get("name"));
         }
         return "loginSuccess" ;
-    }
-    @GetMapping("/loginFailure")
-    @ResponseBody
-    public String failedLogin() {
-        return "Error";
     }
     @GetMapping("/oauth_login")
     public String getLoginPage(Model model) {

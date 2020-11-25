@@ -24,98 +24,12 @@
 </head>
 
 <body>
-<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-    <div class="container"><a class="navbar-brand logo" href="#" style="font-size: 34px;height: 47px;">Effective
-        planning Application</a>
-        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
-                class="navbar-toggler-icon"></span></button>
-        <div
-                class="collapse navbar-collapse" id="navcol-1">
-            <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="login-dark"
-     style="background: url(https://cdn.pixabay.com/photo/2016/02/22/12/34/pen-1215435_960_720.jpg) center / auto space;height: 744px;filter: contrast(143%);">
-    <form method="post" style="background: #b4c4d6;">
-        <h2 class="sr-only">Login Form</h2>
-        <div class="illustration"><i class="icon ion-ios-locked-outline"
-                                     style="border-color: rgb(12,16,21);color: rgb(17,18,18);"></i></div>
-        <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit">Google</button>
-            <button class="btn btn-primary btn-block" type="submit">Github</button>
-        </div>
-    </form>
-</div>
-<main class="page landing-page">
-    <section class="clean-block clean-info dark">
-        <div class="container">
-            <div class="block-heading">
-                <h2 class="text-info">Info</h2>
-            </div>
-            <div class="row align-items-center">
-                <div class="col">
-                    <h3>Lorem impsum dolor sit amet</h3>
-                </div>
-                <div class="col-md-6">
-                    <h3>Lorem impsum dolor sit amet</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur
-                        adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                </div>
-                <div class="col-md-6">
-                    <div class="getting-started-info">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-<footer class="page-footer dark">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                <h5>Get started</h5>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Sign up</a></li>
-                    <li><a href="#">Downloads</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-3">
-                <h5>About us</h5>
-                <ul>
-                    <li><a href="#">Company Information</a></li>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Reviews</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-3">
-                <h5>Support</h5>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Help desk</a></li>
-                    <li><a href="#">Forums</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-3">
-                <h5>Legal</h5>
-                <ul>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <p>© 2020 Copyright Text</p>
-    </div>
-</footer>
+<div >
+    <h4><a th:href="@{/oauth2/authorization/google}" >Google</a> </h4>
+    <h4><a th:href="@{/oauth2/authorization/github}" >Github</a> </h4>
+    <h4><a th:href="@{/oauth2/authorization/facebook}" >Facebook</a> </h4>
 
+</div>
 </body>
 
 </html>
