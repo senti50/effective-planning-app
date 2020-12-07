@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+import pl.senti.effectiveplanningapp.exception.OAuth2AuthenticationProcessingException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class OAuth2AuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -25,18 +27,15 @@ public class OAuth2AuthenticationFailureHandler implements AuthenticationFailure
             HttpServletResponse response,
             AuthenticationException exception)
             throws IOException, ServletException {
+        if (exception instanceof OAuth2AuthenticationProcessingException) {
+            String exceptionMessage = exception.getMessage();
+            request.setAttribute("errorMessage", exceptionMessage);
+            request.getRequestDispatcher("/login-error")
+                    .forward(request, response);
+        } else {
+            super.onAuthenticationFailure(request, response, exception);
+        }
 
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        Map<String, Object> data = new HashMap<>();
-        data.put(
-                "timestamp",
-                Calendar.getInstance().getTime());
-        data.put(
-                "exception",
-                exception.getMessage());
-
-        response.getOutputStream()
-                .println(objectMapper.writeValueAsString(data));
     }
 
 

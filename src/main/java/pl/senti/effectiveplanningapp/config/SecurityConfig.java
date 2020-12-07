@@ -7,8 +7,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import pl.senti.effectiveplanningapp.security.oauth2.CustomOAuth2UserService;
 import pl.senti.effectiveplanningapp.security.oauth2.OAuth2AuthenticationFailureHandler;
+
+import java.net.http.HttpHeaders;
 
 
 @Configuration
@@ -32,11 +36,17 @@ private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHand
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-
+.csrf().disable()
 
                 .authorizeRequests()
-                .antMatchers("/oauth_login","/loginFailure","/","/css/*","/js/*","/h2-console/**").permitAll()
+                .antMatchers("/error","/","/css/*","/js/*","/h2-console/**","/logout").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
                 .and()
                 .oauth2Login()
                 .authorizationEndpoint()
@@ -45,26 +55,18 @@ private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHand
                 .userInfoEndpoint()
                 .oidcUserService(customOAuth2UserService)
                 .and()
-                .loginPage("/oauth_login")
+                //.loginPage("/oauth_login")
+                .loginPage("/")
                 .defaultSuccessUrl("/loginSuccess")
                 .failureHandler(oAuth2AuthenticationFailureHandler)
 
 
 
+
+
+
         ;
-//        http.authorizeRequests()
-//                .antMatchers("/oauth_login")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .oauth2Login()
-//                .defaultSuccessUrl("/loginSuccess");
-//                .failureUrl("/loginFailure")
-//                .loginPage("/oauth_login")
-//                .authorizationEndpoint()
-//                .baseUri("/oauth2/authorize-client")
-//                .authorizationRequestRepository(authorizationRequestRepository());
+
     }
 
 

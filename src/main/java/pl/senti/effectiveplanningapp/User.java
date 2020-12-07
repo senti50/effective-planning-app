@@ -1,6 +1,7 @@
 package pl.senti.effectiveplanningapp;
 
 
+import org.hibernate.annotations.Type;
 import pl.senti.effectiveplanningapp.security.oauth2.AuthProvider;
 
 import javax.persistence.*;
@@ -13,11 +14,18 @@ public class User {
     private Long id;
     private String name;
     private String email;
-    private String image;
-    @Enumerated(EnumType.STRING)
-    private AuthProvider provider;
-    private String providerId;
 
+
+    @Column(columnDefinition = "TEXT")
+    private String image;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum")
+    private AuthProvider provider;
+
+
+    @Column(columnDefinition = "TEXT")
+    private String providerId;
 
     public User(){}
 

@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - Brand</title>
-
-    <link type="text/css" th:href="@{/static/assets/css/Login-Form-Dark.css}" >
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/f592291c08.js" crossorigin="anonymous"></script>
@@ -25,6 +23,7 @@
 
 <body>
 <div >
+    <p th:if="${errorMessage}" th:utext="${errorMessage}"></p>
     <h4><a th:href="@{/oauth2/authorization/google}" >Google</a> </h4>
     <h4><a th:href="@{/oauth2/authorization/github}" >Github</a> </h4>
     <h4><a th:href="@{/oauth2/authorization/facebook}" >Facebook</a> </h4>
