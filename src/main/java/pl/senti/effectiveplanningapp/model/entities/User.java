@@ -1,10 +1,10 @@
-package pl.senti.effectiveplanningapp;
+package pl.senti.effectiveplanningapp.model.entities;
 
 
-import org.hibernate.annotations.Type;
 import pl.senti.effectiveplanningapp.security.oauth2.AuthProvider;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -16,7 +16,7 @@ public class User {
     private String email;
 
 
-    @Column(columnDefinition = "TEXT")
+
     private String image;
 
     @Enumerated(EnumType.STRING)
@@ -24,8 +24,11 @@ public class User {
     private AuthProvider provider;
 
 
-    @Column(columnDefinition = "TEXT")
+
     private String providerId;
+
+    @OneToMany(mappedBy="userId")
+    private Set<TaskList> taskListSet;
 
     public User(){}
 

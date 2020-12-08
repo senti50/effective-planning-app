@@ -39,7 +39,7 @@ private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHand
 .csrf().disable()
 
                 .authorizeRequests()
-                .antMatchers("/error","/","/css/*","/js/*","/h2-console/**","/logout").permitAll()
+                .antMatchers("/error","/","/css/*","/js/*","/h2-console/**","/logout","/taskList/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()

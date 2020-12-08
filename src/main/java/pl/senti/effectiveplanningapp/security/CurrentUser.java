@@ -1,4 +1,4 @@
-package pl.senti.effectiveplanningapp.security.oauth2;
+package pl.senti.effectiveplanningapp.security;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
