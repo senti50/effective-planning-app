@@ -14,7 +14,7 @@ import pl.senti.effectiveplanningapp.model.entities.User;
 import pl.senti.effectiveplanningapp.repository.UserRepository;
 import pl.senti.effectiveplanningapp.exception.OAuth2AuthenticationProcessingException;
 import pl.senti.effectiveplanningapp.security.UserPrincipal;
-import pl.senti.effectiveplanningapp.security.oauth2.dto.OAuth2UserInfo;
+import pl.senti.effectiveplanningapp.security.oauth2.model.OAuth2UserInfo;
 
 import java.util.Optional;
 

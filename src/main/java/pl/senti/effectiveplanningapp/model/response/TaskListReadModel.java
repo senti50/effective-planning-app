@@ -24,8 +24,8 @@ public class TaskListReadModel {
         this.name = name;
     }
 
-    public TaskListReadModel(Long id, TaskList source){
-        this.id = id;
+    public TaskListReadModel( TaskList source){
+        this.id = source.getId();
         this.name=source.getName();
     }
 }

@@ -1,9 +1,5 @@
-package pl.senti.effectiveplanningapp.security.oauth2.dto;
+package pl.senti.effectiveplanningapp.security.oauth2.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import java.util.Collection;
 import java.util.Map;
 
 public class GoogleOAuth2User extends OAuth2UserInfo {

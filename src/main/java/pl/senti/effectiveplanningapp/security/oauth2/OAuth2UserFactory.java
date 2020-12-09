@@ -1,10 +1,10 @@
 package pl.senti.effectiveplanningapp.security.oauth2;
 
 import pl.senti.effectiveplanningapp.exception.OAuth2AuthenticationProcessingException;
-import pl.senti.effectiveplanningapp.security.oauth2.dto.FacebookOAuth2User;
-import pl.senti.effectiveplanningapp.security.oauth2.dto.GithubOAuth2User;
-import pl.senti.effectiveplanningapp.security.oauth2.dto.GoogleOAuth2User;
-import pl.senti.effectiveplanningapp.security.oauth2.dto.OAuth2UserInfo;
+import pl.senti.effectiveplanningapp.security.oauth2.model.FacebookOAuth2User;
+import pl.senti.effectiveplanningapp.security.oauth2.model.GithubOAuth2User;
+import pl.senti.effectiveplanningapp.security.oauth2.model.GoogleOAuth2User;
+import pl.senti.effectiveplanningapp.security.oauth2.model.OAuth2UserInfo;
 
 import java.util.Map;
 

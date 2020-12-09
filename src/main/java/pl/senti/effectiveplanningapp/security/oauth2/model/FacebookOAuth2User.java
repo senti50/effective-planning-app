@@ -1,4 +1,4 @@
-package pl.senti.effectiveplanningapp.security.oauth2.dto;
+package pl.senti.effectiveplanningapp.security.oauth2.model;
 
 import java.util.Map;
 
