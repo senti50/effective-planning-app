@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class LoginController {
 
-    @GetMapping("/")
+    @GetMapping({"/",""})
     public String home() {
-        return "home";
+        return "login";
     }
+
 
     @GetMapping("/loginSuccess")
     public String successfulLogin(Model model, @CurrentUser UserPrincipal userPrincipal) {
@@ -28,6 +29,6 @@ public class LoginController {
     public String login(HttpServletRequest request, Model model) {
         String errorMessage = request.getAttribute("errorMessage").toString();
         model.addAttribute("errorMessage", errorMessage);
-        return "home";
+        return "login";
     }
 }

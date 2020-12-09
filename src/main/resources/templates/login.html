@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Effective planning Application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <style>
+
+        .background {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .nav-wrapper {
+            background-color: whitesmoke;
+        }
+
+        .background-img {
+            width: 100%;
+            object-fit: contain;
+        }
+
+        h2, h3 {
+            text-align: center;
+        }
+
+        .signup-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: auto;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+
+        .signup-form .hint-text {
+            margin-bottom: 50px;
+            color: black;
+            text-align: center;
+        }
+
+        .social-btn .btn {
+            color: #fff;
+            margin: 10px 0 0 10px;
+            font-size: 15px;
+            border-radius: 50px;
+            font-weight: normal;
+            border: none;
+            transition: all 0.4s;
+        }
+
+        .social-btn .btn:hover {
+            opacity: 0.8;
+        }
+
+        .social-btn .btn i {
+            float: left;
+            margin: 2px 10px;
+            font-size: 20px;
+        }
+
+        .alert {
+            border-radius: 12px;
+            margin-top: 15px;
+            padding: 30px;
+            background-color: #f44336;
+            color: white;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <nav class="nav-wrapper">
+        <p class="brand-logo left" style="color: black;margin: 10px">Effective planning Application</p>
+    </nav>
+    <div class="divider"></div>
+    <section class="section" style="background-color: white">
+        <h3>Stay organized and get more done</h3>
+    </section>
+    <div class="background">
+        <img class="background-img" src="https://cdn.pixabay.com/photo/2016/02/22/12/34/pen-1215435_960_720.jpg"/>
+        <div class="signup-form">
+
+            <h4 class="hint-text">Sign up with your social media account</h4>
+            <div class="social-btn text-center">
+
+                <div class="col s12 m6 offset-m3 center-align">
+                    <a class="oauth-container btn darken-4 white black-text" th:href="@{/oauth2/authorization/facebook}"
+                       style="text-transform:none">
+                        <div class="left">
+                            <i class="fa fa-facebook" style="color: #3B5998"></i>
+                        </div>
+                        Login with Facebook
+                    </a>
+                </div>
+                <div class="col s12 m6 offset-m3 center-align">
+                    <a class="oauth-container btn darken-4 white black-text" th:href="@{/oauth2/authorization/github}"
+                       style="text-transform:none">
+                        <div class="left">
+                            <i class="fa fa-github"></i>
+                        </div>
+                        Login with Github
+                    </a>
+                </div>
+                <div class="col s12 m6 offset-m3 center-align">
+                    <a class="oauth-container btn darken-4 white black-text" th:href="@{/oauth2/authorization/google}"
+                       style="text-transform:none">
+                        <div class="left">
+                            <img width="20px" style=" margin-right:8px" alt="Google sign-in"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                        </div>
+                        Login with Google
+                    </a>
+                </div>
+                <div class="alert" th:if="${errorMessage}">
+                    <p th:utext="${errorMessage}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+    <section class="section">
+        <h2>The best way to arrange your life</h2>
+        <p class="flow-text" style="text-align: center">Effective planning application help you organize yours
+            tasks.</p>
+    </section>
+</main>
+
+<footer class="page-footer grey">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2020 Effective planning Application
+        </div>
+    </div>
+</footer>
+</body>
+</html>
