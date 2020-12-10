@@ -17,12 +17,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
                 integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
                 crossorigin="anonymous"></script>
-        <script>
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-
-        </script>
         <style>
 
 
@@ -57,6 +51,7 @@
                 margin: 10px;
             }
 
+
             #page-content-wrapper {
                 min-width: 100vw;
             }
@@ -78,9 +73,17 @@
                 #wrapper.toggled #sidebar-wrapper {
                     margin-left: -15rem;
                 }
+
+
             }
 
         </style>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+        </script>
     </styles>
 </head>
 <body>
@@ -100,11 +103,14 @@
                     <a class="list-group-item list-group-item-action bg-light"
                        style="display: inline-block;padding: 10px"
                        th:text="${taskList.getName()}">dfdf </a>
+
                     <form th:method="delete" th:action="@{/taskList/{taskListId}(taskListId=${taskList.getId()})}">
                         <button class="btn btn-danger btn-sm rounded-0" type="submit" data-toggle="tooltip"
-                                data-placement="top" title="Delete" style="display: inline-block;padding: 12px"><i
+                                data-placement="top" title="Delete"
+                                style="display: inline-block;padding: 12px;"><i
                                 class="fa fa-trash"></i></button>
                     </form>
+
                 </div>
 
 

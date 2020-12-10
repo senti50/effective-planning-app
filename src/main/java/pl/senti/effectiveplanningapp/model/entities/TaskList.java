@@ -1,6 +1,7 @@
 package pl.senti.effectiveplanningapp.model.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class TaskList {
@@ -14,6 +15,9 @@ public class TaskList {
     private Long userId;
 
     private String name;
+
+    @OneToMany(mappedBy="taskListId")
+    private Set<Task> taskSet;
 
     public TaskList(){}
 
