@@ -17,6 +17,12 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
                 integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
                 crossorigin="anonymous"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+        </script>
         <style>
 
 
@@ -33,12 +39,14 @@
                 padding: 0.875rem 1.25rem;
                 font-size: 1.2rem;
             }
+
             #sidebar-wrapper .sidebar-text {
                 padding: 0.875rem 1.25rem;
                 font-size: 1rem;
                 font-weight: bold;
             }
-            #sidebar-wrapper .sidebar-image-container{
+
+            #sidebar-wrapper .sidebar-image-container {
                 margin-left: auto;
                 margin-right: auto;
                 padding: 20px;
@@ -46,6 +54,7 @@
 
             #sidebar-wrapper .list-group {
                 width: 15rem;
+                margin: 10px;
             }
 
             #page-content-wrapper {
@@ -77,33 +86,43 @@
 <body>
 <div th:insert="navbar:: navbar"></div>
 <div id="page-content-wrapper">
-<div class="d-flex" id="wrapper">
-    <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-image-container">
-            <img class="rounded-circle z-depth-2" width="80px" th:src="@{${src}}"
-                 data-holder-rendered="true">
-        </div>
-        <div class="sidebar-heading">Welcome <span th:text="${name}">user</span>!</div>
-        <div class="sidebar-text"> Tasks List</div>
-        <div class="list-group list-group-flush" th:each="taskList : ${tasksList}" >
-            <!--/*@thymesVar id="tasksList" type="java.util.List<pl.senti.effectiveplanningapp.model.response.TaskListReadModel>"*/-->
-            <a  class="list-group-item list-group-item-action bg-light"  th:text="${taskList.getName()}">  </a>
-
-        </div>
-        <!--/*@thymesVar id="newTaskList" type="pl.senti.effectiveplanningapp.model.request.TaskListWriteModel"*/-->
-        <form action="/taskList" method="post" th:object="${newTaskList}">
-            <div class="form-group" style="padding: 10px">
-                <label>Add new list</label>
-                <input type="text" class="form-control"  placeholder="Enter name" th:field="*{name}">
-
+    <div class="d-flex" id="wrapper">
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-image-container">
+                <img class="rounded-circle z-depth-2" width="80px" th:src="@{${src}}"
+                     data-holder-rendered="true">
             </div>
-            <div class="row">
-                <div class="col text-center">
-            <button type="submit" class="btn btn-outline-dark">Add</button>
+            <div class="sidebar-heading">Welcome <span th:text="${name}">user</span>!</div>
+            <div class="sidebar-text"> Tasks List</div>
+            <div class="list-group list-group-flush" th:each="taskList : ${tasksList}">
+                <!--/*@thymesVar id="tasksList" type="java.util.List<pl.senti.effectiveplanningapp.model.response.TaskListReadModel>"*/-->
+                <div style="display: flex;padding-bottom: 10px;padding-right: 5px">
+                    <a class="list-group-item list-group-item-action bg-light"
+                       style="display: inline-block;padding: 10px"
+                       th:text="${taskList.getName()}">dfdf </a>
+                    <form th:method="delete" th:action="@{/taskList/{taskListId}(taskListId=${taskList.getId()})}">
+                        <button class="btn btn-danger btn-sm rounded-0" type="submit" data-toggle="tooltip"
+                                data-placement="top" title="Delete" style="display: inline-block;padding: 12px"><i
+                                class="fa fa-trash"></i></button>
+                    </form>
                 </div>
+
+
             </div>
-        </form>
-    </div>
+            <!--/*@thymesVar id="newTaskList" type="pl.senti.effectiveplanningapp.model.request.TaskListWriteModel"*/-->
+            <form action="/taskList" method="post" th:object="${newTaskList}">
+                <div class="form-group" style="padding: 10px">
+                    <label>Add new list</label>
+                    <input type="text" class="form-control" placeholder="Enter name" th:field="*{name}">
+
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <button type="submit" class="btn btn-outline-dark">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
     </div>
 </div>

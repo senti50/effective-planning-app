@@ -45,11 +45,11 @@ public class TaskListController {
         return ResponseEntity.ok(taskListService.readAllUserTaskList(user.getId()));
     }
 
-    @DeleteMapping("/{taskListId}")
-    ResponseEntity<Void> deleteUserTaskList(@PathVariable Long taskListId) throws TaskListServiceException {
+    @DeleteMapping( "/{taskListId}")
+    ModelAndView deleteUserTaskList(@PathVariable Long taskListId) throws TaskListServiceException {
         taskListService.deleteUserTaskListById(taskListId);
 
-        return ResponseEntity.noContent().build();
+        return new ModelAndView("redirect:/loginSuccess");
     }
 
 
