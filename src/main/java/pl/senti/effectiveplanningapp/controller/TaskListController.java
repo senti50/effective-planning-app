@@ -6,16 +6,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import pl.senti.effectiveplanningapp.exception.TaskListServiceException;
 import pl.senti.effectiveplanningapp.model.request.TaskListWriteModel;
 import pl.senti.effectiveplanningapp.model.response.TaskListReadModel;
-import pl.senti.effectiveplanningapp.repository.TasksListRepository;
 import pl.senti.effectiveplanningapp.security.CurrentUser;
 import pl.senti.effectiveplanningapp.security.UserPrincipal;
 import pl.senti.effectiveplanningapp.service.TaskListService;
 
-import java.net.URI;
 import java.util.List;
 @Controller
 @RequestMapping("/taskList")
@@ -26,13 +26,18 @@ public class TaskListController {
         this.taskListService = taskListService;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+//    @GetMapping(name = "/loginSuccess",produces = MediaType.TEXT_HTML_VALUE)
+//    String showTaskList(Model model){
+//        model.addAttribute("taskItem", new TaskListWriteModel());
+//        return "tasksList";
+//    }
+
+    @PostMapping()
     @Transactional
-    ResponseEntity<TaskListReadModel> createTaskList(@RequestBody TaskListWriteModel toCreate,@CurrentUser UserPrincipal user) {
+    ModelAndView createTaskList(@CurrentUser UserPrincipal user,@ModelAttribute("newTaskList") TaskListWriteModel toCreate ) {
         Long id = user.getId();
-        TaskListReadModel result= taskListService.crateTaskList(toCreate,id);
-        return ResponseEntity.created(URI.create("/"+result.getId())).body(result);
+        taskListService.crateTaskList(toCreate,id);
+        return new ModelAndView("redirect:/loginSuccess");
     }
     @GetMapping()
     @ResponseBody
