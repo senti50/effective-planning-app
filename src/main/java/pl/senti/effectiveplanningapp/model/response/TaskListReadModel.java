@@ -6,6 +6,14 @@ public class TaskListReadModel {
 
     private Long id;
 
+    private String name;
+
+
+    public TaskListReadModel( TaskList source){
+        this.id = source.getId();
+        this.name=source.getName();
+    }
+
     public Long getId() {
         return id;
     }
@@ -14,7 +22,7 @@ public class TaskListReadModel {
         this.id = id;
     }
 
-    private String name;
+
 
     public String getName() {
         return name;
@@ -24,8 +32,5 @@ public class TaskListReadModel {
         this.name = name;
     }
 
-    public TaskListReadModel( TaskList source){
-        this.id = source.getId();
-        this.name=source.getName();
-    }
+
 }
