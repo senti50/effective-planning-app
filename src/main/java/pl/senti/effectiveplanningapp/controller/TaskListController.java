@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.senti.effectiveplanningapp.exception.TaskListServiceException;
@@ -16,6 +17,7 @@ import pl.senti.effectiveplanningapp.security.CurrentUser;
 import pl.senti.effectiveplanningapp.security.UserPrincipal;
 import pl.senti.effectiveplanningapp.service.TaskListService;
 
+import javax.validation.Valid;
 import java.util.List;
 @Controller
 @RequestMapping("/taskList")
@@ -34,7 +36,7 @@ public class TaskListController {
 
     @PostMapping()
     @Transactional
-    ModelAndView createTaskList(@CurrentUser UserPrincipal user,@ModelAttribute("newTaskList") TaskListWriteModel toCreate ) {
+    ModelAndView createTaskList(@CurrentUser UserPrincipal user, @ModelAttribute("newTaskList") @Valid TaskListWriteModel toCreate, BindingResult bindingResult) {
         Long id = user.getId();
         taskListService.crateTaskList(toCreate,id);
         return new ModelAndView("redirect:/loginSuccess");

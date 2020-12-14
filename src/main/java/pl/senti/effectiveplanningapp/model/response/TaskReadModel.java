@@ -1,8 +1,10 @@
 package pl.senti.effectiveplanningapp.model.response;
 
+import pl.senti.effectiveplanningapp.model.entities.Priority;
 import pl.senti.effectiveplanningapp.model.entities.Task;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class TaskReadModel {
 
@@ -14,7 +16,17 @@ public class TaskReadModel {
 
     private boolean isComplete;
 
-    private Date date;
+    private Timestamp date;
+
+    private Priority priority;
+
+    private String noteDescription;
+
+    private String subtaskName;
+
+    public Priority getPriority() {
+        return priority;
+    }
 
     public TaskReadModel(Task source) {
         this.id = source.getId();
@@ -22,6 +34,9 @@ public class TaskReadModel {
         this.name = source.getName();
         this.isComplete = source.isComplete();
         this.date = source.getDate();
+        this.priority=source.getPriority();
+        this.noteDescription= source.getNoteDescription();
+        this.subtaskName=source.getSubtaskName();
     }
 
 
@@ -29,39 +44,36 @@ public class TaskReadModel {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public Long getTaskListId() {
         return taskListId;
     }
 
-    public void setTaskListId(Long taskListId) {
-        this.taskListId = taskListId;
-    }
+
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
     public boolean isComplete() {
         return isComplete;
     }
 
-    public void setComplete(boolean complete) {
-        isComplete = complete;
+
+
+    public String getDate() {
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH.mm").format(date);
+        return timeStamp;
     }
 
-    public Date getDate() {
-        return date;
+    public String getNoteDescription() {
+        return noteDescription;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public String getSubtaskName() {
+        return subtaskName;
     }
 }

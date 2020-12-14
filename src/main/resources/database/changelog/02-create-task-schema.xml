@@ -9,63 +9,34 @@
     <changeSet id="03" author="senti">
         <createTable tableName="task">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints nullable="false" unique="true" primaryKey="true" />
+                <constraints nullable="false" unique="true" primaryKey="true"/>
             </column>
             <column name="task_list_id" type="bigint">
-                <constraints nullable="false"/>
+                <constraints nullable="false" />
             </column>
             <column name="name" type="varchar(50)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="is_complete" type=" boolean" defaultValue="false">
                 <constraints nullable="false"/>
             </column>
-            <column name="date" type="date">
+            <column name="date" type="datetime">
             </column>
             <column name="priority" type="ENUM('High','Medium','Low','None')">
                 <constraints nullable="false"/>
             </column>
+            <column name="subtask_name" type="varchar(255)" defaultValue="">
+                <constraints nullable="true"/>
+            </column>
+            <column name="note_description" type="text" >
+                <constraints nullable="true"/>
+            </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="task" baseColumnNames="id"
+        <addForeignKeyConstraint baseTableName="task"
+                                 baseColumnNames="task_list_id"
                                  constraintName="task_fk"
                                  referencedTableName="task_list" referencedColumnNames="id"/>
 
 
-
-    </changeSet>
-    <changeSet id="04" author="senti">
-        <createTable tableName="subtask">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints nullable="false" unique="true" primaryKey="true"/>
-            </column>
-            <column name="task_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addForeignKeyConstraint baseTableName="subtask" baseColumnNames="task_id"
-                                 constraintName="subtask_fk"
-                                 referencedTableName="task" referencedColumnNames="id"/>
-    </changeSet>
-
-    <changeSet id="05" author="senti">
-        <createTable tableName="note">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints nullable="false" unique="true" primaryKey="true"/>
-            </column>
-            <column name="task_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="varchar(255)">
-                <constraints nullable="true"/>
-            </column>
-        </createTable>
-
-        <addForeignKeyConstraint baseTableName="note" baseColumnNames="task_id"
-                                 constraintName="note_fk"
-                                 referencedTableName="task" referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>
