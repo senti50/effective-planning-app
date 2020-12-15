@@ -7,21 +7,15 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <styles>
         <style>
-
-
             #wrapper {
                 overflow-x: hidden;
             }
-
-
             #sidebar-wrapper {
                 min-height: 100vh;
                 margin-left: -15rem;
@@ -53,7 +47,6 @@
                 margin: 10px;
             }
 
-
             #page-content-wrapper {
                 min-width: 100vw;
             }
@@ -83,80 +76,47 @@
                 margin: 20px;
             }
 
-            .accordion .fa {
-                margin-right: 0.5rem;
-                font-size: 24px;
-                font-weight: bold;
-                position: relative;
-                top: 2px;
-            }
-
-            .custom-control-input-green:focus ~ .custom-control-label::before {
-                border-color: #28a745 !important;
-                box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
-            }
-
-            .custom-control-input-green:checked ~ .custom-control-label::before {
-                border-color: #28a745 !important;
-                background-color: #28a745 !important;
-            }
-
-            .custom-control-input-green:focus:not(:checked) ~ .custom-control-label::before {
-                border-color: #5bd778 !important;
-            }
-
-            .custom-control-input-green:not(:disabled):active ~ .custom-control-label::before {
-                background-color: #d6f5dd !important;
-                border-color: #d6f5dd !important;
-            }
-
             .greenBackground {
                 background-color: green;
                 opacity: 0.6;
             }
-            .task-label{
+
+            .task-label {
                 font-weight: bold;
             }
-
         </style>
-        <script>$("input[type='checkbox']").change(function () {
-            if ($(this).is(":checked")) {
-                console.log("duupa");
-                $(".card").css({"background-color": "yellow", "font-size": "200%"});
-            } else if ($(this).is(":not(:checked)")) {
-                console.log("duupa");
-                $(".card").css({"background-color": "red", "font-size": "200%"});
-            }
-        });
-        $(function () {
-            $('#datetimepicker1').datetimepicker({
-                format: 'YYYY-MM-DD HH:mm', // or 'l' (lowercase L) for non-zero-padded
-                date: moment()
+        <script>
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm', // or 'l' (lowercase L) for non-zero-padded
+                    date: moment()
+                });
             });
-        });
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });</script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });</script>
     </styles>
 </head>
 <body>
 <div th:insert="navbar:: navbar"></div>
-
 <div class="d-flex" id="wrapper">
-
-
     <div class="bg-light border-right" id="sidebar-wrapper">
         <div class="sidebar-image-container">
             <!--/*@thymesVar id="src" type="java.lang.String"*/-->
             <img class="rounded-circle z-depth-2" width="80px" th:src="@{${src}}"
-                 data-holder-rendered="true">
+                 data-holder-rendered="true" src="Image">
         </div>
         <div class="sidebar-heading">Welcome <!--/*@thymesVar id="name" type="java.lang.String"*/-->
             <span th:text="${name}">user</span>!
         </div>
         <div class="sidebar-text"> Tasks List</div>
+        <p th:if="${#lists.isEmpty(tasksList)}"
+           style="color: #004085;background-color: #cce5ff;border-color: #b8daff;padding: 10px;">
+            You do not have any to-do lists.Create one!
+        </p>
+        <!--/*@thymesVar id="tasksList" type="java.util.List<pl.senti.effectiveplanningapp.model.response.TaskListReadModel>"*/-->
         <div class="list-group list-group-flush" th:each="taskList : ${tasksList}">
-            <!--/*@thymesVar id="tasksList" type="java.util.List<pl.senti.effectiveplanningapp.model.response.TaskListReadModel>"*/-->
+
             <div style="display: flex;padding-bottom: 10px;padding-right: 5px">
                 <form method="get" th:action="@{/home/task/{taskListId}(taskListId=${taskList.getId()})}"
                       style="min-width: 80%">
@@ -182,9 +142,7 @@
             <div class="form-group" style="padding: 10px">
                 <label>Add new list</label>
                 <input type="text" class="form-control" placeholder="Enter name" th:field="*{name}" required>
-                <div class="invalid-feedback">
-                    TaskList name can not be empty
-                </div>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
             </div>
             <div class="row">
                 <div class="col text-center">
@@ -192,76 +150,83 @@
                 </div>
             </div>
         </form>
+
     </div>
-
-
     <div id="page-content-wrapper">
-
-
         <div class="container-fluid">
-
-
             <div class="modal-body row">
                 <div class="col-md-6">
-                    <!-- Your first column here -->
-
+                    <!-- first column here -->
                     <!--/*@thymesVar id="tasks" type="java.util.List<pl.senti.effectiveplanningapp.model.response.TaskReadModel>"*/-->
                     <div class="bs-example">
                          <span th:if="${#lists.isEmpty(tasks)}" class="alert alert-primary" role="alert">
-                               Select any to-do list on the left side to display the tasks
+                              There are no tasks in this list
                             </span>
+
                         <div class="accordion" id="accordionExample">
 
-                            <div class="card" th:each="task : ${tasks}">
+                            <div class="card" th:each="task : ${tasks}"
+                                 th:style="${task.isComplete()} == true ? 'background-color: #bfff80' : 'background-color: white'">
 
-                                <div class="card-header d-flex justify-content-between align-items-center"
-                                     id="headingOne">
-                                    <h2 class="mb-0">
+                                <div class="card-header d-flex justify-content " id="headingOne">
+                                    <div class="mr-auto p-2">
+                                        <h2 class="mb-0">
 
-                                        <button type="button" class="btn" data-toggle="collapse"
-                                                data-target="#collapseOne" th:text="${task.getName()}"> ...
-                                        </button>
+                                            <button type="button" class="btn" data-toggle="collapse"
+                                                    th:attr="data-target='#accordion_'+${task.name}"
+                                                    th:text="${task.getName()}">
+                                            </button>
 
-                                    </h2>
-                                    <form th:method="delete" th:action="@{/task/{taskId}(taskId=${task.getId()})}">
-                                        <button type="submit" class="close" aria-label="Delete" data-toggle="tooltip"
-                                                data-placement="top" title="Delete task">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </form>
+                                        </h2>
+                                    </div>
+                                    <div class="p-2">
+                                        <form th:method="patch"
+                                              th:action="@{/task/{taskId}/{taskListId} (taskId=${task.getId()},taskListId=${task.getTaskListId()})}">
+                                            <button type="submit" class="btn btn-outline-secondary"
+                                                    aria-label="Change status" data-toggle="tooltip"
+                                                    data-placement="top" title="Change status">
+                                                <span th:text="${task.complete} ? 'UNDONE' : ' DONE '"></span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="p-2">
+                                        <form th:method="delete"
+                                              th:action="@{/task/{taskId}/{taskListId} (taskId=${task.getId()},taskListId=${task.getTaskListId()})}">
+                                            <button type="submit" class="close" aria-label="Delete"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top" title="Delete task">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                <div th:id="'accordion_'+${task.name}" class="collapse" aria-labelledby="headingOne"
                                      data-parent="#accordionExample">
-                                    <div class="card-body"
-                                         th:style="${task.isComplete()} == true ? 'background-color: #bfff80' : 'background-color: white'">
+                                    <div class="card-body">
 
                                         <label class="task-label">Task deadline</label>
-                                            <p th:text="${task.date}">A description list is perfect
-                                                for defining terms.
-                                            </p>
+                                        <p th:text="${task.date}">
+                                        </p>
 
-                                            <label class="task-label">Task priority</label>
-                                            <p  th:text="${task.priority}">None
-                                            </p>
+                                        <label class="task-label">Task priority</label>
+                                        <p th:text="${task.priority}">
+                                        </p>
 
 
                                         <label class="task-label" th:unless="${#strings.isEmpty(task.subtaskName)}">Subtask </label>
-                                            <p th:unless="${#strings.isEmpty(task.subtaskName)}" th:text="${task.subtaskName}">None
-                                            </p>
+                                        <p th:unless="${#strings.isEmpty(task.subtaskName)}"
+                                           th:text="${task.subtaskName}">
+                                        </p>
 
 
                                         <label class="task-label" th:unless="${#strings.isEmpty(task.noteDescription)}">Notes </label>
-                                                <p class="text-break" th:unless="${#strings.isEmpty(task.noteDescription)}" th:text="${task.noteDescription}">mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm</p>
+                                        <p class="text-break" th:unless="${#strings.isEmpty(task.noteDescription)}"
+                                           th:text="${task.noteDescription}"></p>
 
+                                        <label class="task-label">Status task</label>
+                                        <p th:if="${task.complete} ">Done </p>
+                                        <p th:unless="${task.complete} ">Undone </p>
 
-
-
-                                        <div class="custom-control custom-checkbox custom-checkbox-green">
-                                            <input type="checkbox"
-                                                   class="custom-control-input custom-control-input-green"
-                                                   id="customCheck">
-                                            <label class="custom-control-label" for="customCheck"></label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -269,29 +234,32 @@
 
                         </div>
                     </div>
-
-
-                    <!--
-                     <ul class="col list-group" th:each="task:${tasks}">
-                         <li class="list-group-item" th:text="${task.getName()}">Active item</li>
-
-                     </ul>
- -->
-
                 </div>
                 <div class="col-md-6">
-                    <!-- Your second column here -->
+                    <!--second column here -->
 
-
+                    <!--/*@thymesVar id="tasksList" type="java.util.List<pl.senti.effectiveplanningapp.model.response.TaskListReadModel>"*/-->
                     <!--/*@thymesVar id="newTask" type="pl.senti.effectiveplanningapp.model.request.TaskWriteModel"*/-->
-                    <form action="#" method="post" th:action="@{/home/addTask}" th:object="${newTask}">
+                    <form action="#" method="post" th:action="@{/home/addTask/{taskListId}}" th:object="${newTask}">
+                        <h4>Create new task</h4>
                         <div class="form-group">
-                            <label>Task name</label>
-                            <input type="text" class="form-control" placeholder="Enter task name" th:field="*{name}">
-                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
-                            <div class="invalid-feedback">
+                            <label>Choose task List</label>
+                            <p th:if="${#lists.isEmpty(tasksList)}" class="alert alert-primary" role="alert">
+                                First create a to-do list to be able to add tasks
+                            </p>
+                            <select class="form-control" th:field="*{taskListId}" required>
+                                <option th:each="taskList : ${tasksList}" th:text="${taskList.getName()}"
+                                        th:value="${taskList.getId()}"
+                                        th:name="taskListId"></option>
 
-                            </div>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="validationName">Task name</label>
+                            <input type="text" class="form-control" id="validationName" placeholder="Enter task name"
+                                   th:field="*{name}" required>
+                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+
                         </div>
 
                         <div class="form-group">
@@ -327,15 +295,6 @@
                             </select>
                         </div>
 
-                        <!--/*@thymesVar id="tasksList" type="java.util.List<pl.senti.effectiveplanningapp.model.response.TaskListReadModel>"*/-->
-                        <div class="form-group">
-                            <label>Choose task List</label>
-                            <select class="form-control" th:field="*{taskListId}">
-                                <option th:each="taskList : ${tasksList}" th:text="${taskList.getName()}"
-                                        th:value="${taskList.getId()}"></option>
-
-                            </select>
-                        </div>
 
                         <div class="form-group">
                             <label>Subtask</label>
@@ -345,47 +304,29 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col text-center">
-                                    <button type="submit" class="btn btn-outline-dark" style="margin: 10px;width: 40%">
+                                    <button type="submit" class="btn btn-outline-dark" id="addTaskButton"
+                                            style="margin: 10px;width: 40%">
                                         Add task
                                     </button>
                                 </div>
-                            </div>
-
-                            <div class="alert alert-success" role="alert" th:if="${message!=null}">
-                                <!--/*@thymesVar id="message" type="java.lang.String"*/-->
-                                <p th:text="${message}"></p>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-
-
         </div>
-
-
     </div>
-
 </div>
-
-</div>
-
-
 <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
     <div class="container text-center">
         <small>Copyright &copy; Effective planning Application</small>
     </div>
 </footer>
-
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-
 </body>
 </html>

@@ -33,7 +33,10 @@ public class Task {
     private String subtaskName;
 
 
+    public void toggle() {
+        this.isComplete = !this.isComplete;
 
+    }
 
     public Task() {
     }

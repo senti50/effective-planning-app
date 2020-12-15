@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.senti.effectiveplanningapp.exception.TaskListServiceException;
@@ -37,6 +38,9 @@ public class TaskListController {
     @PostMapping()
     @Transactional
     ModelAndView createTaskList(@CurrentUser UserPrincipal user, @ModelAttribute("newTaskList") @Valid TaskListWriteModel toCreate, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return new ModelAndView("redirect:/loginSuccess");
+        }
         Long id = user.getId();
         taskListService.crateTaskList(toCreate,id);
         return new ModelAndView("redirect:/loginSuccess");
@@ -47,8 +51,10 @@ public class TaskListController {
         return ResponseEntity.ok(taskListService.readAllUserTaskList(user.getId()));
     }
 
+    @Transactional
     @DeleteMapping( "/{taskListId}")
     ModelAndView deleteUserTaskList(@PathVariable Long taskListId) throws TaskListServiceException {
+
         taskListService.deleteUserTaskListById(taskListId);
 
         return new ModelAndView("redirect:/loginSuccess");

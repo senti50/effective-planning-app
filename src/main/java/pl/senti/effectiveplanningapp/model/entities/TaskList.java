@@ -16,7 +16,7 @@ public class TaskList {
 
     private String name;
 
-    @OneToMany(mappedBy="taskListId",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="taskListId",cascade = CascadeType.PERSIST,orphanRemoval=true)
     private Set<Task> taskSet;
 
     public TaskList(){}

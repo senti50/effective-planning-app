@@ -2,8 +2,10 @@ package pl.senti.effectiveplanningapp.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.senti.effectiveplanningapp.exception.TaskListServiceException;
@@ -11,7 +13,7 @@ import pl.senti.effectiveplanningapp.model.request.TaskWriteModel;
 import pl.senti.effectiveplanningapp.model.response.TaskReadModel;
 import pl.senti.effectiveplanningapp.service.TaskService;
 
-import javax.validation.Valid;
+
 import java.util.List;
 
 @Controller
@@ -33,10 +35,17 @@ public class TaskController {
 
     }
 
-    @DeleteMapping( "/{taskId}")
-    ModelAndView deleteTask(@PathVariable Long taskId)  {
+    @Transactional
+    @DeleteMapping( "/{taskId}/{taskListId}")
+    ModelAndView deleteTask(@PathVariable Long taskId,@PathVariable Long taskListId)  {
        taskService.deleteTask(taskId);
 
-        return new ModelAndView("redirect:/loginSuccess");
+        return new ModelAndView("redirect:/home/task/"+taskListId);
+    }
+    @Transactional
+    @PatchMapping("/{taskId}/{taskListId}")
+    ModelAndView toggleTask(@PathVariable Long taskId,@PathVariable Long taskListId)  {
+        taskService.changeIsCompleteField(taskId);
+        return new ModelAndView("redirect:/home/task/"+taskListId);
     }
 }
