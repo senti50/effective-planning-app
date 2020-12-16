@@ -1,12 +1,12 @@
 package pl.senti.effectiveplanningapp.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.ModelAndView;
 import pl.senti.effectiveplanningapp.model.entities.Priority;
 import pl.senti.effectiveplanningapp.model.request.TaskListWriteModel;
 import pl.senti.effectiveplanningapp.model.request.TaskWriteModel;
@@ -25,11 +25,11 @@ import java.util.List;
 
 
 @Controller
-public class LoginController {
+public class MainController {
     private final TaskListService taskListService;
     private final TaskService taskService;
 
-    public LoginController(TaskListService taskListService, TaskService taskService) {
+    public MainController(TaskListService taskListService, TaskService taskService) {
         this.taskListService = taskListService;
         this.taskService = taskService;
     }
@@ -40,35 +40,35 @@ public class LoginController {
     }
 
 
-    @GetMapping("/loginSuccess")
+    @GetMapping("/home")
     public String successfulLogin(Model model, @CurrentUser UserPrincipal userPrincipal) {
 
-        addUserInfoAndTaskListToModel(userPrincipal.getName(), userPrincipal.getImage(), userPrincipal.getId(), model);
-
-        return "loginSuccess";
+        addUserInfoAndTaskListAndPriorityOptionsToModel(userPrincipal.getName(), userPrincipal.getImage(), userPrincipal.getId(), model);
+        model.addAttribute("newTask", new TaskWriteModel());
+        model.addAttribute("newTaskList", new TaskListWriteModel());
+        return "home";
     }
 
-    private void addUserInfoAndTaskListToModel(String userName, String userImageUrl, Long userId, Model model) {
+    private void addUserInfoAndTaskListAndPriorityOptionsToModel(String userName, String userImageUrl, Long userId, Model model) {
         model.addAttribute("name", userName);
         model.addAttribute("src", userImageUrl);
         List<TaskListReadModel> list = taskListService.readAllUserTaskList(userId);
         model.addAttribute("tasksList", list);
-        model.addAttribute("newTaskList", new TaskListWriteModel());
         List<Priority> priorities = new ArrayList<>(Arrays.asList(Priority.values()));
         model.addAttribute("priorityOptions", priorities);
-        model.addAttribute("newTask", new TaskWriteModel());
     }
 
 
     @GetMapping("/home/task/{taskListId}")
     public String getTasksFromTaskList(@PathVariable Long taskListId, Model model,
                                        @CurrentUser UserPrincipal userPrincipal) {
-        addUserInfoAndTaskListToModel(userPrincipal.getName(), userPrincipal.getImage(), userPrincipal.getId(), model);
+        addUserInfoAndTaskListAndPriorityOptionsToModel(userPrincipal.getName(), userPrincipal.getImage(), userPrincipal.getId(), model);
         List<TaskReadModel> taskList = taskService.readAllTaskFromTaskList(taskListId);
         model.addAttribute("tasks", taskList);
 
-        //model.addAttribute("newTask",new TaskWriteModel());
-        return "loginSuccess";
+        model.addAttribute("newTask", new TaskWriteModel());
+        model.addAttribute("newTaskList", new TaskListWriteModel());
+        return "home";
     }
 
     @Transactional
@@ -80,11 +80,29 @@ public class LoginController {
             @CurrentUser UserPrincipal userPrincipal,
             Model model) {
         if (bindingResult.hasErrors()) {
-            addUserInfoAndTaskListToModel(userPrincipal.getName(), userPrincipal.getImage(), userPrincipal.getId(), model);
-            return "loginSuccess";
+            addUserInfoAndTaskListAndPriorityOptionsToModel(userPrincipal.getName(), userPrincipal.getImage(), userPrincipal.getId(), model);
+
+            model.addAttribute("newTaskList", new TaskListWriteModel());
+            return "home";
         }
         taskService.crateTask(current);
         return "redirect:/home/task/"+taskListId;
+    }
+
+    @PostMapping("/home/addTaskList")
+    @Transactional
+    String createTaskList(@CurrentUser UserPrincipal userPrincipal,
+                                @ModelAttribute("newTaskList") @Valid TaskListWriteModel toCreate,
+                                BindingResult bindingResult,
+                                Model model) {
+        if (bindingResult.hasErrors()){
+            addUserInfoAndTaskListAndPriorityOptionsToModel(userPrincipal.getName(),userPrincipal.getImage(),userPrincipal.getId(),model);
+            model.addAttribute("newTask", new TaskWriteModel());
+            return "home";
+        }
+        Long id = userPrincipal.getId();
+        taskListService.crateTaskList(toCreate,id);
+        return "redirect:/home";
     }
 
 

@@ -19,8 +19,8 @@ import java.net.http.HttpHeaders;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-private final CustomOAuth2UserService customOAuth2UserService;
-private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
 
     public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler) {
         this.customOAuth2UserService = customOAuth2UserService;
@@ -36,10 +36,9 @@ private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHand
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-.csrf().disable()
-
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/error","/","/css/*","/js/*","/logout","/taskList/**","/login").permitAll()
+                .antMatchers("/error", "/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
@@ -55,20 +54,9 @@ private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHand
                 .userInfoEndpoint()
                 .oidcUserService(customOAuth2UserService)
                 .and()
-                //.loginPage("/oauth_login")
                 .loginPage("/")
-                .defaultSuccessUrl("/loginSuccess")
-                .failureHandler(oAuth2AuthenticationFailureHandler)
-
-
-
-
-
-
-        ;
+                .defaultSuccessUrl("/home")
+                .failureHandler(oAuth2AuthenticationFailureHandler);
 
     }
-
-
-
 }

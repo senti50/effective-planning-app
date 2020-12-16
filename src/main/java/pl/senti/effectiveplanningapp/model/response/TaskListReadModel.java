@@ -22,8 +22,6 @@ public class TaskListReadModel {
         this.id = id;
     }
 
-
-
     public String getName() {
         return name;
     }

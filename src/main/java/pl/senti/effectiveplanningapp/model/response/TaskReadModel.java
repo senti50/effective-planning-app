@@ -8,21 +8,21 @@ import java.text.SimpleDateFormat;
 
 public class TaskReadModel {
 
-    private Long id;
+    private final Long id;
 
-    private Long taskListId;
+    private final Long taskListId;
 
-    private String name;
+    private final String name;
 
-    private boolean isComplete;
+    private final boolean isComplete;
 
-    private Timestamp date;
+    private final Timestamp date;
 
-    private Priority priority;
+    private final Priority priority;
 
-    private String noteDescription;
+    private final String noteDescription;
 
-    private String subtaskName;
+    private final String subtaskName;
 
     public Priority getPriority() {
         return priority;
@@ -65,8 +65,7 @@ public class TaskReadModel {
 
 
     public String getDate() {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH.mm").format(date);
-        return timeStamp;
+        return new SimpleDateFormat("yyyy-MM-dd HH.mm").format(date);
     }
 
     public String getNoteDescription() {

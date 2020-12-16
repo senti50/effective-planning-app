@@ -38,7 +38,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } catch (AuthenticationException ex) {
             throw ex;
         } catch (Exception ex) {
-            // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
             throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
         }
     }
@@ -62,26 +61,23 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } else {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
-
-//        return new DefaultOAuth2User(oAuth2User.getAuthorities(), oAuth2UserInfo.getAttributes(),oAuth2UserRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint()
-//                .getUserNameAttributeName());
         return UserPrincipal.create(user, oAuth2User.getAttributes());
 
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
         User user = new User();
-
         user.setProvider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
         user.setProviderId(oAuth2UserInfo.getId());
-        user.setName(oAuth2UserInfo.getName());
+        if(oAuth2UserInfo.getName()!=null) {
+            user.setName(oAuth2UserInfo.getName());
+        }
         user.setEmail(oAuth2UserInfo.getEmail());
         user.setImage(oAuth2UserInfo.getImageUrl());
         return userRepository.save(user);
     }
 
     private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
-        existingUser.setName(oAuth2UserInfo.getName());
         existingUser.setImage(oAuth2UserInfo.getImageUrl());
         return userRepository.save(existingUser);
     }

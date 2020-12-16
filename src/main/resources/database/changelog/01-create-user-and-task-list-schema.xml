@@ -11,10 +11,10 @@
         <column name="id" type="bigint" autoIncrement="true">
             <constraints nullable="false" unique="true" primaryKey="true" />
         </column>
-        <column name="name" type="varchar(50)">
-            <constraints nullable="false" />
+        <column name="name" type="varchar(50)" defaultValue="User">
+            <constraints nullable="true" />
         </column>
-        <column name="email" type="varchar(50)">
+        <column name="email" type="varchar(50)" >
             <constraints nullable="false"/>
         </column>
         <column name="image" type="varchar(255)">

@@ -4,8 +4,9 @@ import pl.senti.effectiveplanningapp.model.entities.Priority;
 import pl.senti.effectiveplanningapp.model.entities.Task;
 
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,13 +15,15 @@ public class TaskWriteModel {
 
     private Long taskListId;
 
-    @NotBlank(message = "Task name must  not be empty")
+    @NotBlank(message = "Task's name must  not be empty.")
+    @Size(min = 1,max = 255,message = "Task's name must contain at least one character and no more than 250 characters.")
     private String name;
 
     private String date;
 
     private Priority priority;
 
+    @Size(max = 255,message = "The note can not contain more than 255 characters")
     private String noteDescription;
 
     private String subtaskName;

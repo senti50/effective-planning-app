@@ -10,8 +10,6 @@ public class TaskList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne(targetEntity = User.class,fetch = FetchType.LAZY)
-//    @JoinColumn(name="id",nullable = false,insertable = false,updatable = false)
     private Long userId;
 
     private String name;

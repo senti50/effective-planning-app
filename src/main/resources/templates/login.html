@@ -92,7 +92,7 @@
 
             <h4 class="hint-text">Sign up with your social media account</h4>
             <div class="social-btn text-center">
-
+<!--
                 <div class="col s12 m6 offset-m3 center-align">
                     <a class="oauth-container btn darken-4 white black-text" th:href="@{/oauth2/authorization/facebook}"
                        style="text-transform:none">
@@ -102,25 +102,28 @@
                         Login with Facebook
                     </a>
                 </div>
-                <div class="col s12 m6 offset-m3 center-align">
-                    <a class="oauth-container btn darken-4 white black-text" th:href="@{/oauth2/authorization/github}"
-                       style="text-transform:none">
-                        <div class="left">
-                            <i class="fa fa-github"></i>
-                        </div>
-                        Login with Github
-                    </a>
-                </div>
+-->
                 <div class="col s12 m6 offset-m3 center-align">
                     <a class="oauth-container btn darken-4 white black-text" th:href="@{/oauth2/authorization/google}"
                        style="text-transform:none">
                         <div class="left">
-                            <img width="20px" style=" margin-right:8px" alt="Google sign-in"
+                            <img width="20px" style="margin-right:8px;padding-top: 10px" alt="Google sign-in"
                                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
                         </div>
                         Login with Google
                     </a>
                 </div>
+                <div class="col s12 m6 offset-m3 center-align">
+                    <a class="oauth-container btn darken-4 white black-text" th:href="@{/oauth2/authorization/github}"
+                       style="text-transform:none;">
+                        <div class="left" style="padding-right: 5px">
+                            <i class="fa fa-github"></i>
+                        </div>
+                        Login with Github
+                    </a>
+                </div>
+
+                <!--/*@thymesVar id="errorMessage" type="java.lang.String"*/-->
                 <div class="alert" th:if="${errorMessage}">
                     <p th:utext="${errorMessage}"></p>
                 </div>
@@ -138,7 +141,7 @@
 <div class="divider"></div>
 <footer class="page-footer blue-grey darken-3">
     <div class="footer-copyright">
-        <div class="container" style="padding: 15px">
+        <div class="container" align="center" style="padding: 15px">
             © 2020 Effective planning Application
         </div>
     </div>

@@ -1,15 +1,10 @@
 package pl.senti.effectiveplanningapp.controller;
 
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.senti.effectiveplanningapp.exception.TaskListServiceException;
-import pl.senti.effectiveplanningapp.model.request.TaskWriteModel;
 import pl.senti.effectiveplanningapp.model.response.TaskReadModel;
 import pl.senti.effectiveplanningapp.service.TaskService;
 
@@ -31,7 +26,7 @@ public class TaskController {
         List<TaskReadModel> taskList = taskService.readAllTaskFromTaskList(taskListId);
         model.addAttribute("taskList",taskList);
 
-        return new ModelAndView("redirect:/loginSuccess");
+        return new ModelAndView("redirect:/home");
 
     }
 
