@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login Success</title>
+    <title>Effective Planning Application Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -85,6 +85,10 @@
             .task-label {
                 font-weight: bold;
             }
+            .btn{
+                white-space:normal !important;
+                max-width:500px;
+            }
         </style>
         <script>
             $(function () {
@@ -116,22 +120,22 @@
             You do not have any to-do lists.Create one!
         </p>
         <!--/*@thymesVar id="tasksList" type="java.util.List<pl.senti.effectiveplanningapp.model.response.TaskListReadModel>"*/-->
-        <div class="list-group list-group-flush" th:each="taskList : ${tasksList}">
+        <div class="list-group list-group-flush" th:each="taskList : ${tasksList}" style="overflow: auto">
 
-            <div style="display: flex;padding-bottom: 10px;padding-right: 5px">
+            <div style="display: flex;padding-bottom: 10px;">
                 <form method="get" th:action="@{/home/task/{taskListId}(taskListId=${taskList.getId()})}"
                       style="min-width: 80%">
-                    <button class="list-group-item list-group-item-action bg-light"
-                            style="display: inline-block;padding: 10px;"
-                            th:text="${taskList.getName()}">Home
+                    <button  class="list-group-item list-group-item-action bg-light btn-xs"
+                            style="padding: 10px;word-wrap:break-word;"
+                            th:text="${taskList.getName()}">
                     </button>
                 </form>
 
                 <form th:method="delete" th:action="@{/taskList/{taskListId}(taskListId=${taskList.getId()})}">
-                    <button class="btn btn-danger btn-sm rounded-0" type="submit" data-toggle="tooltip"
-                            data-placement="top" title="Delete"
-                            style="display: inline-block;padding: 12px;"><i
-                            class="fa fa-trash"></i></button>
+                    <button class="btn btn-danger btn-sm rounded-10" type="submit" data-toggle="tooltip"
+                            data-placement="right" title="Delete"
+                            style="display:inline;height: 100%;padding: 8px 10px 8px 8px;"><i
+                            class="fa fa-trash fa-2x"></i></button>
                 </form>
             </div>
 
@@ -173,7 +177,8 @@
 
                                             <button type="button" class="btn" data-toggle="collapse"
                                                     th:attr="data-target='#accordion_'+${task.name}"
-                                                    th:text="${task.getName()}">
+                                                    th:text="${task.getName()}"
+                                            style="word-wrap:break-word;">
                                             </button>
 
                                         </h2>
