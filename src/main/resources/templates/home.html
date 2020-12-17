@@ -176,7 +176,7 @@
                                         <h2 class="mb-0">
 
                                             <button type="button" class="btn" data-toggle="collapse"
-                                                    th:attr="data-target='#accordion_'+${task.name}"
+                                                    th:attr="data-target='#accordion_'+${task.id}"
                                                     th:text="${task.getName()}"
                                             style="word-wrap:break-word;">
                                             </button>
@@ -204,7 +204,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div th:id="'accordion_'+${task.name}" class="collapse" aria-labelledby="headingOne"
+                                <div th:id="'accordion_'+${task.id}" class="collapse" aria-labelledby="headingOne"
                                      data-parent="#accordionExample">
                                     <div class="card-body">
 
