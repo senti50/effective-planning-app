@@ -3,7 +3,7 @@
 
 ## Table of contents
 * [General info](#general-info)
-* [Live Demo](#Live-Demo)
+* [Screenshots](#Screenshots)
 * [Technologies](#technologies)
 * [How to use?](#How-to-use?)
 
@@ -14,8 +14,17 @@
 to these to-do lists
 * logging in with Google or GitHub
 
-## Live Demo
-> http://effectiveplanningapplication-env.eba-xs6xeppn.eu-central-1.elasticbeanstalk.com/
+## Screenshots
+### Login Page
+![login](screens/loginpage.JPG)
+
+### Main Page
+![interface](screens/interfejs.jpg)
+
+### Tasks List
+![tasklist](screens/tasklist.JPG)
+
+![donetasklist](screens/greentask.jpg)
 
 ## Technologies
 * Spring Boot
